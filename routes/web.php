@@ -38,6 +38,7 @@ Route::middleware(['auth', 'role:provider'])->prefix('provider')->name('provider
     Route::get('/dashboard', [ProviderController::class, 'dashboard'])->name('dashboard');
     Route::get('/services', [ProviderController::class, 'services'])->name('services');
     Route::get('/orders', [ProviderController::class, 'orders'])->name('orders');
+    Route::get('/orders/{id}', [ProviderController::class, 'orderDetails'])->name('order.details');
     Route::get('/profile', [ProviderController::class, 'profile'])->name('profile');
 });
 
@@ -46,6 +47,7 @@ Route::middleware(['auth', 'role:client'])->prefix('client')->name('client.')->g
     Route::get('/dashboard', [ClientController::class, 'dashboard'])->name('dashboard');
     Route::get('/services', [ClientController::class, 'services'])->name('services');
     Route::get('/orders', [ClientController::class, 'orders'])->name('orders');
+    Route::get('/orders/{id}', [ClientController::class, 'orderDetails'])->name('order.details');
     Route::get('/profile', [ClientController::class, 'profile'])->name('profile');
 });
 
