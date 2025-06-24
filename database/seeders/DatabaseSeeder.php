@@ -39,5 +39,10 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
         ]);
         $client->assignRole('client');
+
+        // Create sample services
+        $this->call([
+            ServiceSeeder::class,
+        ]);
     }
 }
