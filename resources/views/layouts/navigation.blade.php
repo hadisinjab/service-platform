@@ -15,11 +15,54 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    @if(Auth::user()->hasRole('client'))
+                        <x-nav-link :href="route('client.services')" :active="request()->routeIs('client.services')">
+                            {{ __('Services') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('client.orders')" :active="request()->routeIs('client.orders')">
+                            {{ __('My Orders') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('orders.create')" :active="request()->routeIs('orders.create')">
+                            {{ __('Create Order') }}
+                        </x-nav-link>
+                    @endif
+
+                    @if(Auth::user()->hasRole('provider'))
+                        <x-nav-link :href="route('provider.services')" :active="request()->routeIs('provider.services')">
+                            {{ __('My Services') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('provider.orders')" :active="request()->routeIs('provider.orders')">
+                            {{ __('Orders') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('provider.reviews')" :active="request()->routeIs('provider.reviews')">
+                            {{ __('Reviews') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
             <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
+            <div class="hidden sm:flex sm:items-center sm:ms-6 space-x-4">
+                <!-- Quick Action Buttons for Client -->
+                @if(Auth::user()->hasRole('client'))
+                    <a href="{{ route('orders.create') }}" class="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-bold rounded-lg transition duration-200 shadow-md hover:shadow-lg border border-red-500">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                        NEW ORDER
+                    </a>
+                    @php $isServicesActive = request()->routeIs('client.services'); @endphp
+                    <a href="{{ route('client.services') }}"
+                       class="mx-2 transition duration-150 ease-in-out
+                       {{ $isServicesActive ? 'bg-blue-100 text-blue-900 font-extrabold px-4 py-2 rounded-lg' : 'text-blue-700 font-bold hover:bg-blue-50 px-4 py-2 rounded-lg' }}">
+                        Services
+                    </a>
+                @endif
+
+                <!-- Notifications Dropdown -->
+                <x-notifications-dropdown />
+
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
@@ -70,6 +113,30 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            @if(Auth::user()->hasRole('client'))
+                <x-responsive-nav-link :href="route('client.services')" :active="request()->routeIs('client.services')">
+                    {{ __('Services') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('client.orders')" :active="request()->routeIs('client.orders')">
+                    {{ __('My Orders') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('orders.create')" :active="request()->routeIs('orders.create')">
+                    {{ __('Create Order') }}
+                </x-responsive-nav-link>
+            @endif
+
+            @if(Auth::user()->hasRole('provider'))
+                <x-responsive-nav-link :href="route('provider.services')" :active="request()->routeIs('provider.services')">
+                    {{ __('My Services') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('provider.orders')" :active="request()->routeIs('provider.orders')">
+                    {{ __('Orders') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('provider.reviews')" :active="request()->routeIs('provider.reviews')">
+                    {{ __('Reviews') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
