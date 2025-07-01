@@ -116,18 +116,18 @@
             </div>
 
             <!-- Message Form -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-blue-50 border-2 border-blue-400 shadow-sm sm:rounded-lg my-8">
                 <div class="p-6">
+                    <h4 class="text-lg font-bold text-blue-700 mb-4">أرسل رسالة جديدة</h4>
                     <form method="POST" action="{{ route('messages.store', $order) }}" enctype="multipart/form-data" class="space-y-4">
                         @csrf
-
                         <div>
                             <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Your Message</label>
                             <textarea
                                 name="message"
                                 id="message"
                                 rows="3"
-                                class="block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                                class="block w-full border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md shadow-sm"
                                 placeholder="Type your message here..."
                                 required
                             >{{ old('message') }}</textarea>
@@ -135,14 +135,13 @@
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
-
                         <div>
                             <label for="file" class="block text-sm font-medium text-gray-700 mb-2">Attachment (Optional)</label>
                             <input
                                 type="file"
                                 name="file"
                                 id="file"
-                                class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                                class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200"
                                 accept="image/*,.pdf,.doc,.docx,.txt"
                             >
                             <p class="mt-1 text-sm text-gray-500">Max file size: 10MB. Supported: Images, PDF, DOC, TXT</p>
@@ -150,9 +149,8 @@
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
-
                         <div class="flex justify-end">
-                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out">
+                            <button type="submit" class="border-2 border-blue-700 bg-blue-600 hover:bg-blue-800 text-blue-900 font-bold py-2 px-6 rounded transition duration-150 ease-in-out shadow">
                                 Send Message
                             </button>
                         </div>
