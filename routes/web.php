@@ -7,6 +7,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -56,6 +57,16 @@ Route::middleware('auth')->group(function () {
     Route::patch('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.update-status');
     Route::patch('/orders/{order}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
     Route::get('/orders', [OrderController::class, 'search'])->name('orders.index');
+});
+
+// Message Routes
+Route::middleware('auth')->group(function () {
+    Route::get('/orders/{order}/messages', [MessageController::class, 'index'])->name('messages.index');
+    Route::post('/orders/{order}/messages', [MessageController::class, 'store'])->name('messages.store');
+    Route::patch('/messages/{message}/read', [MessageController::class, 'markAsRead'])->name('messages.mark-read');
+    Route::patch('/orders/{order}/messages/mark-all-read', [MessageController::class, 'markAllAsRead'])->name('messages.mark-all-read');
+    Route::get('/messages/unread-count', [MessageController::class, 'getUnreadCount'])->name('messages.unread-count');
+    Route::get('/messages/{message}/download', [MessageController::class, 'downloadAttachment'])->name('messages.download');
 });
 
 // Review Routes

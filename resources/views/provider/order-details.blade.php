@@ -206,6 +206,52 @@
                         </div>
                     </div>
 
+                    <!-- Messages Section -->
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-semibold text-gray-900">Messages</h3>
+                                <a href="{{ route('messages.index', $order) }}" class="text-sm text-blue-600 hover:text-blue-800">
+                                    View All Messages
+                                </a>
+                            </div>
+
+                            @php
+                                $recentMessages = \App\Models\Message::where('order_id', $order->id)
+                                    ->with(['sender'])
+                                    ->latest()
+                                    ->take(3)
+                                    ->get();
+                            @endphp
+
+                            @if($recentMessages->count() > 0)
+                                <div class="space-y-3">
+                                    @foreach($recentMessages as $message)
+                                        <div class="border-l-4 border-blue-500 pl-3">
+                                            <div class="flex items-center justify-between">
+                                                <p class="text-sm font-medium text-gray-900">{{ $message->sender->name }}</p>
+                                                <p class="text-xs text-gray-500">{{ $message->time_ago }}</p>
+                                            </div>
+                                            <p class="text-sm text-gray-600 truncate">{{ Str::limit($message->message, 50) }}</p>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <div class="mt-4">
+                                    <a href="{{ route('messages.index', $order) }}" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-center py-2 px-4 rounded transition duration-150 ease-in-out">
+                                        Send Message
+                                    </a>
+                                </div>
+                            @else
+                                <div class="text-center py-4">
+                                    <p class="text-gray-500 text-sm mb-3">No messages yet</p>
+                                    <a href="{{ route('messages.index', $order) }}" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-center py-2 px-4 rounded transition duration-150 ease-in-out">
+                                        Start Conversation
+                                    </a>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
                     <!-- Quick Actions -->
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6">
