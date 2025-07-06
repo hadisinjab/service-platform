@@ -87,10 +87,24 @@ Route::middleware('auth')->group(function () {
 });
 
 // Admin Routes
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/users', [App\Http\Controllers\AdminController::class, 'users'])->name('users');
+    Route::get('/services', [App\Http\Controllers\AdminController::class, 'services'])->name('services');
+    Route::get('/orders', [App\Http\Controllers\AdminController::class, 'orders'])->name('orders');
+    Route::get('/reports', [App\Http\Controllers\AdminController::class, 'reports'])->name('reports');
+    Route::get('/settings', [App\Http\Controllers\AdminController::class, 'settings'])->name('settings');
+
+    // User Management Actions
+    Route::patch('/users/{user}/toggle-status', [App\Http\Controllers\AdminController::class, 'toggleUserStatus'])->name('users.toggle-status');
+    Route::delete('/users/{user}', [App\Http\Controllers\AdminController::class, 'deleteUser'])->name('users.delete');
+
+    // Service Management Actions
+    Route::patch('/services/{service}/toggle-status', [App\Http\Controllers\AdminController::class, 'toggleServiceStatus'])->name('services.toggle-status');
+    Route::delete('/services/{service}', [App\Http\Controllers\AdminController::class, 'deleteService'])->name('services.delete');
+
+    // Order Management Actions
+    Route::delete('/orders/{order}', [App\Http\Controllers\AdminController::class, 'deleteOrder'])->name('orders.delete');
 });
 
 require __DIR__.'/auth.php';

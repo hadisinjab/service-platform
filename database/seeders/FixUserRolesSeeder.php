@@ -8,30 +8,34 @@ use Spatie\Permission\Models\Role;
 
 class FixUserRolesSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     */
     public function run(): void
     {
-        // Get or create roles
-        $clientRole = Role::firstOrCreate(['name' => 'client']);
-        $providerRole = Role::firstOrCreate(['name' => 'provider']);
+        // Get roles
+        $clientRole = Role::where('name', 'client')->first();
+        $providerRole = Role::where('name', 'provider')->first();
+        $adminRole = Role::where('name', 'admin')->first();
 
-        // Fix client user
-        $client = User::where('email', 'client@test.com')->first();
-        if ($client) {
-            $client->syncRoles([$clientRole]);
-            $this->command->info('Client roles fixed: ' . $client->getRoleNames()->implode(', '));
-        } else {
-            $this->command->error('Client user not found!');
+        // Find users without roles
+        $usersWithoutRoles = User::whereDoesntHave('roles')->get();
+
+        foreach ($usersWithoutRoles as $user) {
+            // Assign default role based on email or name
+            if (str_contains(strtolower($user->email), 'admin')) {
+                $user->assignRole($adminRole);
+                echo "Assigned admin role to: {$user->email}\n";
+            } elseif (str_contains(strtolower($user->email), 'provider')) {
+                $user->assignRole($providerRole);
+                echo "Assigned provider role to: {$user->email}\n";
+            } else {
+                // Default to client role
+                $user->assignRole($clientRole);
+                echo "Assigned client role to: {$user->email}\n";
+            }
         }
 
-        // Fix provider user
-        $provider = User::where('email', 'provider@test.com')->first();
-        if ($provider) {
-            $provider->syncRoles([$providerRole]);
-            $this->command->info('Provider roles fixed: ' . $provider->getRoleNames()->implode(', '));
-        } else {
-            $this->command->error('Provider user not found!');
-        }
-
-        $this->command->info('User roles fixed successfully!');
+        echo "Fixed roles for " . $usersWithoutRoles->count() . " users.\n";
     }
 }
