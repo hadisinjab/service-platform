@@ -87,6 +87,22 @@ class Service extends Model
         return $query->whereBetween('price', [$min, $max]);
     }
 
+    public function scopeSearch($query, $search)
+    {
+        return $query->where(function ($q) use ($search) {
+            $q->where('title', 'like', "%{$search}%")
+              ->orWhere('description', 'like', "%{$search}%")
+              ->orWhere('category', 'like', "%{$search}%");
+        });
+    }
+
+    public function scopeByMinRating($query, $rating)
+    {
+        return $query->whereHas('reviews', function ($q) use ($rating) {
+            $q->havingRaw('AVG(rating) >= ?', [$rating]);
+        });
+    }
+
     // Helper methods
     public function getAverageRatingAttribute(): float
     {

@@ -44,7 +44,7 @@
                                         <td class="px-4 py-2 text-sm text-green-700 font-semibold">${{ number_format($order->price, 2) }}</td>
                                         <td class="px-4 py-2 text-sm text-gray-500">{{ $order->created_at->format('M d, Y') }}</td>
                                         <td class="px-4 py-2 text-right">
-                                            <a href="{{ route('orders.show', $order) }}"
+                                            <a href="{{ route('client.order-details', $order) }}"
                                                style="background: #e3342f; color: #fff; border: 2px solid #000; padding: 10px 20px; border-radius: 8px; font-weight: bold; display: inline-block;">
                                                 VIEW DETAILS TEST
                                             </a>

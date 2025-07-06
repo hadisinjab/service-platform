@@ -16,9 +16,13 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('services.index')" :active="request()->routeIs('services.*')">
+                        {{ __('Browse Services') }}
+                    </x-nav-link>
+
                     @if(Auth::user()->hasRole('client'))
                         <x-nav-link :href="route('client.services')" :active="request()->routeIs('client.services')">
-                            {{ __('Services') }}
+                            {{ __('My Services') }}
                         </x-nav-link>
                         <x-nav-link :href="route('client.orders')" :active="request()->routeIs('client.orders')">
                             {{ __('My Orders') }}
@@ -114,9 +118,13 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
 
+            <x-responsive-nav-link :href="route('services.index')" :active="request()->routeIs('services.*')">
+                {{ __('Browse Services') }}
+            </x-responsive-nav-link>
+
             @if(Auth::user()->hasRole('client'))
                 <x-responsive-nav-link :href="route('client.services')" :active="request()->routeIs('client.services')">
-                    {{ __('Services') }}
+                    {{ __('My Services') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('client.orders')" :active="request()->routeIs('client.orders')">
                     {{ __('My Orders') }}

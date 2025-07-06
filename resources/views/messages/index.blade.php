@@ -118,7 +118,7 @@
             <!-- Message Form -->
             <div class="bg-blue-50 border-2 border-blue-400 shadow-sm sm:rounded-lg my-8">
                 <div class="p-6">
-                    <h4 class="text-lg font-bold text-blue-700 mb-4">أرسل رسالة جديدة</h4>
+                    <h4 class="text-lg font-bold text-blue-700 mb-4">Send New Message</h4>
                     <form method="POST" action="{{ route('messages.store', $order) }}" enctype="multipart/form-data" class="space-y-4">
                         @csrf
                         <div>

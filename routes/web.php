@@ -8,6 +8,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -67,6 +68,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/orders/{order}/messages/mark-all-read', [MessageController::class, 'markAllAsRead'])->name('messages.mark-all-read');
     Route::get('/messages/unread-count', [MessageController::class, 'getUnreadCount'])->name('messages.unread-count');
     Route::get('/messages/{message}/download', [MessageController::class, 'downloadAttachment'])->name('messages.download');
+});
+
+// Service Routes
+Route::middleware('auth')->group(function () {
+    Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
+    Route::get('/services/{service}', [ServiceController::class, 'show'])->name('services.show');
 });
 
 // Review Routes
